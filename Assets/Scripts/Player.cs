@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    Rigidbody2D rb;
     Transform tr;
+    public Rigidbody2D rb;
+    private BoxCollider2D boxcollider;
+
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask whatIsGround;
@@ -20,6 +22,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<Transform>();
+        boxcollider = GetComponent<BoxCollider2D>();
     }
 
    void OnCollisionEnter2D(Collision2D collision)
@@ -36,6 +39,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, rb.velocity.y);
         if(Input.GetKeyDown(KeyCode.Space) && jumpLimit == 2){
             rb.AddForce(Vector2.up * jumpHeight2, ForceMode2D.Impulse);
@@ -52,5 +56,8 @@ public class Player : MonoBehaviour
      
     }
 
-
+    //private bool IsOnGround()
+    //{
+    //    return Physics2D.BoxCast(boxcollider.bounds.center, boxcollider.bounds.size, 0f, Vector2.down, .1f, whatIsGround);
+    //}
 }
