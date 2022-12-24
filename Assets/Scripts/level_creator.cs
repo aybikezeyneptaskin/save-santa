@@ -10,6 +10,8 @@ public class level_creator : MonoBehaviour
     public int height = 200;
     static System.Random rnd = new System.Random();
     public GameObject platform;
+    public GameObject branch;
+    public GameObject cloud;
 
     void Awake()
     {
@@ -38,16 +40,24 @@ public class level_creator : MonoBehaviour
                 if (scenario == 0)
                 {
                     int center = Random.Range(0, width-3);
-                    row[center] = 1;
-                    row[center+1] = 1;
-                    row[center+2] = 1;
-                    row[center+3] = 1;
+                    int to_place = 1;
+                    if ((height/2 <i) && (center<width/3 || center>width*2/3))
+                        to_place = 2;
+
+                    row[center] = to_place;
+                    row[center+1] = to_place;
+                    row[center+2] = to_place;
+                    row[center+3] = to_place;
 
                     center = Random.Range(0, width-3);
-                    row[center] = 1;
-                    row[center+1] = 1;
-                    row[center+2] = 1;
-                    row[center+3] = 1;
+                    to_place = 1;
+                    if ((height/2 <i) && (center<width/3 || center>width*2/3))
+                        to_place = 2;
+
+                    row[center] = to_place;
+                    row[center+1] = to_place;
+                    row[center+2] = to_place;
+                    row[center+3] = to_place;
 
                     //row[Random.Range(0, width-3)] = 1;
 
@@ -62,19 +72,28 @@ public class level_creator : MonoBehaviour
                 else if(scenario == 1)
                 {
                     int center = Random.Range(0, width-2);
-                    row[center] = 1;
-                    row[center+1] = 1;
-                    row[center+2] = 1;
+                    int to_place = 1;
+                    if ((height/2 <i) && (center<width/3 || center>width*2/3))
+                        to_place = 2;
+                    row[center] = to_place;
+                    row[center+1] = to_place;
+                    row[center+2] = to_place;
 
                     center = Random.Range(0, width-2);
-                    row[center] = 1;
-                    row[center+1] = 1;
-                    row[center+2] = 1;
+                    to_place = 1;
+                    if ((height/2 <i) && (center<width/3 || center>width*2/3))
+                        to_place = 2;
+                    row[center] = to_place;
+                    row[center+1] = to_place;
+                    row[center+2] = to_place;
 
                     center = Random.Range(0, width-2);
-                    row[center] = 1;
-                    row[center+1] = 1;
-                    row[center+2] = 1;
+                    to_place = 1;
+                    if ((height/2 <i) && (center<width/3 || center>width*2/3))
+                        to_place = 2;
+                    row[center] = to_place;
+                    row[center+1] = to_place;
+                    row[center+2] = to_place;
 
                     /*string log = "";
 
@@ -88,20 +107,32 @@ public class level_creator : MonoBehaviour
                 else
                 {
                     int center = Random.Range(0, width-1);
-                    row[center] = 1;
-                    row[center+1] = 1;
+                    int to_place = 1;
+                    if ((height/2 <i) && (center<width/3 || center>width*2/3))
+                        to_place = 2;
+                    row[center] = to_place;
+                    row[center+1] = to_place;
 
                     center = Random.Range(0, width-1);
-                    row[center] = 1;
-                    row[center+1] = 1;
+                    to_place = 1;
+                    if ((height/2 <i) && (center<width/3 || center>width*2/3))
+                        to_place = 2;
+                    row[center] = to_place;
+                    row[center+1] = to_place;
 
                     center = Random.Range(0, width-1);
-                    row[center] = 1;
-                    row[center+1] = 1;
+                    to_place = 1;
+                    if ((height/2 <i) && (center<width/3 || center>width*2/3))
+                        to_place = 2;
+                    row[center] = to_place;
+                    row[center+1] = to_place;
 
                     center = Random.Range(0, width-1);
-                    row[center] = 1;
-                    row[center+1] = 1;
+                    to_place = 1;
+                    if ((height/2 <i) && (center<width/3 || center>width*2/3))
+                        to_place = 2;
+                    row[center] = to_place;
+                    row[center+1] = to_place;
 
                     //row[Random.Range(0, width-1)] = 1;
 
@@ -137,13 +168,47 @@ public class level_creator : MonoBehaviour
 
             for(int i=0;i<height;i++)
             {
+                int ones_start = -1;
+                int ones_end = -1;
                 for(int j=0;j<width;j++)
                 {
                     if(total_str[i*width+j] == '1')
                     {
                         Instantiate(platform, new Vector3(-7.75f + j*0.5f, -3f + i*(0.5f+2f),0), Quaternion.identity);
+
+                        if (ones_start == -1)
+                        {
+                            ones_start = j;
+                            ones_end = -1;
+                        }
                     }
+                    else if(total_str[i*width+j] == '0' || total_str[i*width+j] == '2')
+                    {
+                        if (ones_start > -1)
+                        {
+                            ones_end = j -1;
+
+                            Instantiate(branch, new Vector3(-7.75f + (ones_start+ones_end)*0.25f, -3f + i*(0.5f+2f),0), Quaternion.identity);
+
+                            ones_start = -1;
+
+                        }
+
+                    }
+                if(total_str[i*width+j] == '2')
+                {
+                    Instantiate(cloud, new Vector3(-7.75f + j*0.5f, -3f + i*(0.5f+2f),0), Quaternion.identity);
                 }
+
+                }
+                if (ones_end == -1 && ones_start != -1)
+                {
+                    ones_end = width -1;
+                    Instantiate(branch, new Vector3(-7.75f + (ones_start+ones_end)*0.25f, -3f + i*(0.5f+2f),0), Quaternion.identity);
+
+                }
+
+
             }
 
 
