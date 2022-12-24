@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
         //rb.velocity = new Vector2(5,rb.velocity.y);
         onGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius,whatIsGround);
         
-        if(Input.GetMouseButtonDown(0) || (Input.GetKeyDown (KeyCode.Space)) /*&& onGround*/){
+        if((Input.GetKeyDown (KeyCode.Space))/*&& onGround*/){
             rb.velocity = new Vector2(rb.velocity.y,jumpHeight);
         }
     }
