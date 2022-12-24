@@ -62,6 +62,5 @@ public class Bird : MonoBehaviour
     private void ResetGame()
     {
         Application.LoadLevel(Application.loadedLevel);
-
     }
 }
