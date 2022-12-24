@@ -33,7 +33,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, rb.velocity.y);
+        input = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+        if (input.x < 0){
+            tr.localScale = new Vector3(Mathf.Abs(tr.localScale.x)*-1,tr.localScale.y,tr.localScale.z);
+        }else if (input.x > 0){
+            tr.localScale = new Vector3(Mathf.Abs(tr.localScale.x),tr.localScale.y,tr.localScale.z);
+        }
+        rb.velocity = new Vector2(input.x * speed, rb.velocity.y);
         if(Input.GetKeyDown(KeyCode.Space) && jumpLimit == 2){
             rb.AddForce(Vector2.up * jumpHeight2, ForceMode2D.Impulse);
             jumpLimit--;
