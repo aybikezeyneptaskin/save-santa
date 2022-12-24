@@ -20,18 +20,21 @@ public class Player : MonoBehaviour
     void Update()
     {
         float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-        Vector2 movement = new Vector2(x, y);
+        //float y = Input.GetAxis("Vertical");
+        Vector2 movement = new Vector2(x, 0);
         transform.Translate(movement * speed * Time.deltaTime);
         
-     if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))  //makes player jump
-     {   
-        GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpHeight);
-     }
+        //rb.velocity = new Vector2(5,rb.velocity.y);
+        onGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius,whatIsGround);
+        
+        if(Input.GetMouseButtonDown(0) || (Input.GetKeyDown (KeyCode.Space)) /*&& onGround*/){
+            rb.velocity = new Vector2(rb.velocity.y,jumpHeight);
+        }
+    }
     void FixedUpdate()
     {
      
     }
 
-}
+
 }
