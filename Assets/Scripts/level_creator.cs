@@ -12,7 +12,10 @@ public class level_creator : MonoBehaviour
     public GameObject platform;
     public GameObject branch;
     public GameObject cloud;
+    public GameObject tree;
     public Material material;
+    private float branch_kalinlik = 0.25f;
+    private float hah = 0.15f;
 
     void Awake()
     {
@@ -169,6 +172,12 @@ public class level_creator : MonoBehaviour
 
             for(int i=0;i<height;i++)
             {
+                Instantiate(tree, new Vector3(0, -4f+i*(0.5f+2f),0), Quaternion.identity);
+                Instantiate(tree, new Vector3(0, -4f+i*(0.5f+2f)+0.5f,0), Quaternion.identity);
+                Instantiate(tree, new Vector3(0, -4f+i*(0.5f+2f)+1f,0), Quaternion.identity);
+                Instantiate(tree, new Vector3(0, -4f+i*(0.5f+2f)+1.5f,0), Quaternion.identity);
+                Instantiate(tree, new Vector3(0, -4f+i*(0.5f+2f)+2f,0), Quaternion.identity);
+
                 int ones_start = -1;
                 int ones_end = -1;
                 for(int j=0;j<width;j++)
@@ -193,18 +202,42 @@ public class level_creator : MonoBehaviour
                             float leaf_center_y = -3f + i*(0.5f+2f);
                             float branch_center_y = leaf_center_y - Mathf.Abs(branch_cneter_x);
                             
-                            GameObject x = Instantiate(branch, new Vector3(-7.75f + (ones_start+ones_end)*0.25f, -3f + i*(0.5f+2f),0), Quaternion.identity);
-                            LineRenderer l = x.AddComponent<LineRenderer>();
-                            l.material = material;
-                            List<Vector3> pos = new List<Vector3>();
-                            pos.Add(new Vector3(0, leaf_center_y-2));
-                            pos.Add(new Vector3(leaf_center_x, leaf_center_y));
-                            l.startWidth = 0.25f;
-                            l.endWidth = 0.25f;
-                            l.SetPositions(pos.ToArray());
-                            l.useWorldSpace = true;
-                            // GameObject leaf = Instantiate(branch, new Vector3(branch_cneter_x, branch_center_y,0), Quaternion.identity);
-                            // leaf.transform.localScale = new Vector3(Mathf.Abs(branch_cneter_x), Mathf.Abs(branch_cneter_x), 1);
+                            
+                            float k_end = leaf_center_x/hah;
+                            float birim = hah;
+                            if(k_end< 0){
+                                k_end = -k_end;
+                                birim = -birim;
+                            }
+                            float birim_y = 2/k_end;
+                            
+                            for(int k = 0; k < k_end; k++)
+                            {
+                                GameObject x = Instantiate(branch, new Vector3(-7.75f + (ones_start+ones_end)*0.25f, -3f + i*(0.5f+2f),0), Quaternion.identity);
+                                LineRenderer l = x.AddComponent<LineRenderer>();
+                                l.material = material;
+                                // change order layer of line renderer
+                                l.sortingOrder = -2;
+                                List<Vector3> pos = new List<Vector3>();
+                                pos.Add(new Vector3(0+k*birim, leaf_center_y-2 + k*birim_y));
+                                pos.Add(new Vector3(0+(k+1)*birim, leaf_center_y-2 + (k+1)*birim_y));
+                                l.startWidth = branch_kalinlik;
+                                l.endWidth = branch_kalinlik;
+                                l.SetPositions(pos.ToArray());
+                                l.useWorldSpace = true;
+                            }
+
+                            // GameObject x = Instantiate(branch, new Vector3(-7.75f + (ones_start+ones_end)*0.25f, -3f + i*(0.5f+2f),0), Quaternion.identity);
+                            // LineRenderer l = x.AddComponent<LineRenderer>();
+                            // l.material = material;
+                            // List<Vector3> pos = new List<Vector3>();
+                            // pos.Add(new Vector3(0, leaf_center_y-2));
+                            // pos.Add(new Vector3(leaf_center_x, leaf_center_y));
+                            // l.startWidth = 0.25f;
+                            // l.endWidth = 0.25f;
+                            // l.SetPositions(pos.ToArray());
+                            // l.useWorldSpace = true;
+                            
 
                             ones_start = -1;
 
@@ -221,6 +254,34 @@ public class level_creator : MonoBehaviour
                 {
                     ones_end = width -1;
                     Instantiate(branch, new Vector3(-7.75f + (ones_start+ones_end)*0.25f, -3f + i*(0.5f+2f),0), Quaternion.identity);
+                    float leaf_center_x = -7.75f + (ones_start+ones_end)*0.25f;
+                    float branch_cneter_x = leaf_center_x/2;
+                    float leaf_center_y = -3f + i*(0.5f+2f);
+                    float branch_center_y = leaf_center_y - Mathf.Abs(branch_cneter_x);
+                    
+                    
+                    float k_end = leaf_center_x/hah;
+                    float birim = hah;
+                    if(k_end< 0){
+                        k_end = -k_end;
+                        birim = -birim;
+                    }
+                    float birim_y = 2/k_end;
+                    
+                    for(int k = 0; k < k_end; k++)
+                    {
+                        GameObject x = Instantiate(branch, new Vector3(-7.75f + (ones_start+ones_end)*0.25f, -3f + i*(0.5f+2f),0), Quaternion.identity);
+                        LineRenderer l = x.AddComponent<LineRenderer>();
+                        l.material = material;
+                        l.sortingOrder = -2;
+                        List<Vector3> pos = new List<Vector3>();
+                        pos.Add(new Vector3(0+k*birim, leaf_center_y-2 + k*birim_y));
+                        pos.Add(new Vector3(0+(k+1)*birim, leaf_center_y-2 + (k+1)*birim_y));
+                        l.startWidth = branch_kalinlik;
+                        l.endWidth = branch_kalinlik;
+                        l.SetPositions(pos.ToArray());
+                        l.useWorldSpace = true;
+                    }
 
                 }
 

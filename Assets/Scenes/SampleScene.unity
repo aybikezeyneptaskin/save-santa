@@ -240,6 +240,7 @@ MonoBehaviour:
   platform: {fileID: 5501771574730468303, guid: 4b89a1a0ac553447eba6eaeafc4c073d, type: 3}
   branch: {fileID: 5501771574730468303, guid: 1c5c8498b7a35754787f02e53ce3639c, type: 3}
   cloud: {fileID: 5501771574730468303, guid: 764d893904dc34a81aa40ad294e6ecff, type: 3}
+  tree: {fileID: 5501771574730468303, guid: 8cb9b87f6eddd48c792a41b0d04695f2, type: 3}
   material: {fileID: 2100000, guid: 27a40d8e8130c4b6589d1323271dce54, type: 2}
 --- !u!1 &699002239
 GameObject:
