@@ -12,6 +12,7 @@ public class level_creator : MonoBehaviour
     public GameObject platform;
     public GameObject branch;
     public GameObject cloud;
+    public Material material;
 
     void Awake()
     {
@@ -187,8 +188,23 @@ public class level_creator : MonoBehaviour
                         if (ones_start > -1)
                         {
                             ones_end = j -1;
-
-                            Instantiate(branch, new Vector3(-7.75f + (ones_start+ones_end)*0.25f, -3f + i*(0.5f+2f),0), Quaternion.identity);
+                            float leaf_center_x = -7.75f + (ones_start+ones_end)*0.25f;
+                            float branch_cneter_x = leaf_center_x/2;
+                            float leaf_center_y = -3f + i*(0.5f+2f);
+                            float branch_center_y = leaf_center_y - Mathf.Abs(branch_cneter_x);
+                            
+                            GameObject x = Instantiate(branch, new Vector3(-7.75f + (ones_start+ones_end)*0.25f, -3f + i*(0.5f+2f),0), Quaternion.identity);
+                            LineRenderer l = x.AddComponent<LineRenderer>();
+                            l.material = material;
+                            List<Vector3> pos = new List<Vector3>();
+                            pos.Add(new Vector3(0, leaf_center_y-2));
+                            pos.Add(new Vector3(leaf_center_x, leaf_center_y));
+                            l.startWidth = 0.25f;
+                            l.endWidth = 0.25f;
+                            l.SetPositions(pos.ToArray());
+                            l.useWorldSpace = true;
+                            // GameObject leaf = Instantiate(branch, new Vector3(branch_cneter_x, branch_center_y,0), Quaternion.identity);
+                            // leaf.transform.localScale = new Vector3(Mathf.Abs(branch_cneter_x), Mathf.Abs(branch_cneter_x), 1);
 
                             ones_start = -1;
 
