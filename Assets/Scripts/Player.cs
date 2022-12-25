@@ -25,7 +25,8 @@ public class Player : MonoBehaviour
         Debug.Log("Collision normal " + collision.contacts[0].normal.y+ collision.gameObject.tag);
         if (collision.gameObject.layer == 6 && collision.contacts[0].normal.y != -1){
             jumpLimit = 2;
-        }else if(collision.gameObject.layer == 7 && collision.contacts[0].normal.y == 1){
+        }
+        else if(collision.gameObject.layer == 7 && collision.contacts[0].normal.y == 1){
             jumpLimit = 2;
             Object.Destroy(collision.gameObject, cloudDestroyTime);
         }
@@ -54,5 +55,6 @@ public class Player : MonoBehaviour
     {
      
     }
+
 
 }

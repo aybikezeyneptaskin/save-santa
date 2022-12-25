@@ -6,6 +6,8 @@ TagManager:
   tags:
   - obstacle
   - enemy
+  - bounds
+  - santa
   layers:
   - Default
   - TransparentFX
