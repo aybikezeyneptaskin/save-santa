@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     public float jumpHeight2;
     public float jumpHeight1;
     public float cloudDestroyTime;
+    public GameObject gameWinUI;
     Vector2 input;
     float jumpLimit = 2;
 
@@ -32,6 +34,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "santa")
+        {
+           Win();
+        }
+    }
+
+    public void Win()
+    {   
+        Debug.Log("WON!!!!!!!!!");
+        gameWinUI.SetActive(true);
+        //gameWinUI.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void restart(){
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("SampleScene");
+        //Application.LoadLevel(Application.loadedLevel);
+    }
+
     void Update()
     {
         input = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
@@ -41,10 +65,10 @@ public class Player : MonoBehaviour
             tr.localScale = new Vector3(Mathf.Abs(tr.localScale.x),tr.localScale.y,tr.localScale.z);
         }
         rb.velocity = new Vector2(input.x * speed, rb.velocity.y);
-        if(Input.GetKeyDown(KeyCode.Space) && jumpLimit == 2){
+        if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpLimit == 2){
             rb.AddForce(Vector2.up * jumpHeight2, ForceMode2D.Impulse);
             jumpLimit--;
-        }else if(Input.GetKeyDown(KeyCode.Space) && jumpLimit == 1){
+        }else if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpLimit == 1){
             rb.velocity = new Vector2(rb.velocity.x,0);
             rb.AddForce(Vector2.up * jumpHeight1, ForceMode2D.Impulse);
             jumpLimit--;

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -330993614429663032}
   m_Layer: 0
   m_Name: Santa
-  m_TagString: Untagged
+  m_TagString: santa
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,4 +146,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a832f3869950cc846a54db322f26941e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 4762424429411956345, guid: 297c686811515b740a4ab2ba88d40936, type: 3}

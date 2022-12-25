@@ -21,7 +21,7 @@ public class Santa : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
@@ -47,7 +47,7 @@ public class Santa : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("SampleScene");
         //Application.LoadLevel(Application.loadedLevel);
-    }
+    }*/
 }
 
     
