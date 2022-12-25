@@ -8,6 +8,8 @@ TagManager:
   - enemy
   - bounds
   - santa
+  - winUI
+  - canvas
   layers:
   - Default
   - TransparentFX

@@ -12,8 +12,11 @@ public class level_creator : MonoBehaviour
     public GameObject platform;
     public GameObject branch;
     public GameObject cloud;
+    public GameObject santa;
     public GameObject tree;
+    public GameObject bird;
     public Material material;
+    public int birdRandom = 10;
     private float branch_kalinlik = 0.25f;
     private float hah = 0.15f;
 
@@ -178,6 +181,10 @@ public class level_creator : MonoBehaviour
                 Instantiate(tree, new Vector3(0, -4f+i*(0.5f+2f)+1.5f,0), Quaternion.identity);
                 Instantiate(tree, new Vector3(0, -4f+i*(0.5f+2f)+2f,0), Quaternion.identity);
 
+                if (Random.Range(0, birdRandom) == 0){
+                    Instantiate(bird, new Vector3(0, -4f+i*(0.5f+2f)+1f,0), Quaternion.identity);
+                }
+
                 int ones_start = -1;
                 int ones_end = -1;
                 for(int j=0;j<width;j++)
@@ -285,10 +292,10 @@ public class level_creator : MonoBehaviour
 
                 }
 
-
+		
             }
 
-
+		Instantiate(santa, new Vector3(0, -4f+height*(0.5f+2f),0), Quaternion.identity);
     }
 
     // Update is called once per frame

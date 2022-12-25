@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManagerScript : MonoBehaviour
 {
     public GameObject gameWinUI;
     // Start is called before the first frame update
